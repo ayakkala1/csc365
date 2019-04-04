@@ -46,7 +46,7 @@ def main():
         if command[0][0] == "S":
             if len(arguments) == 0:
                 print("Arguments not given")
-            elif len(arguments) == 2:
+            elif (len(arguments) == 2) and (arguments[1][0].upper() == "B"):
                 lastname_query(df, arguments[0], True)
             else:
                 lastname_query(df, arguments[0], False)
