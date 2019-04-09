@@ -4,14 +4,21 @@ import math
 
 def main():
     try:
-        df = pd.read_csv("students.txt",header=None, names = ["StLastName",
-                                                     "StFirstName",
-                                                     "Grade",
-                                                     "Classroom",
-                                                     "Bus",
-                                                     "GPA",
-                                                     "TLastName",
-                                                     "TFirstName"])
+        list_df = pd.read_csv("https://s3-us-west-1.amazonaws.com/csc365-spring2019/list.txt",
+           header = None,
+           names = ["StLastName",
+                    "StFirstName",
+                    "Grade",
+                    "Classroom",                    
+                    "Bus",
+                    "GPA"])
+
+        teachers_df = pd.read_csv("https://s3-us-west-1.amazonaws.com/csc365-spring2019/teachers.txt",
+           header = None,
+           names = ["TLastName",
+                    "TFirstName",
+                    "Classroom"])
+        df = list_df.merge(teachers_df)
     except:
         print("File not Found")
     if (list(df.dtypes.values) != ([dtype('O'),
@@ -28,8 +35,10 @@ def main():
            "Commands: \n"
            "- S[tudent]: <lastname> [B[us]] \n"
            "- T[eacher]: <lastname> \n"
-           "- G[rade]: <number> [H[igh]]|L[ow]] \n"
+           "- G[rade]: <number> [H[igh]]|L[ow]|S[tudent]|T[eacher]] \n"
+           "- C[lassroom]: <number> [S[tudent]|T[eacher]] \n"
            "- A[verage]: <number> \n"
+           "- E[nrollment] \n"
            "- I[nfo] \n"
            "- Q[uit] \n"
          "Note: The text in arguments is optional while the rest is not. \n")
@@ -68,6 +77,8 @@ def main():
                     hi_lo_query(df, arguments[0], lo = False)
                 elif arguments[1][0] == "L":
                     hi_lo_query(df, arguments[0], lo = True)
+                elif arguments[1][0] == "T":
+                    grade_query(df, arguments[0], find_teach = True)
             else:
                 grade_query(df, arguments[0])
         elif command[0][0] == "A":
@@ -77,6 +88,18 @@ def main():
                 avg_query(df, arguments[0])
         elif command[0][0] == "I":
             info_query(df)
+        elif command[0][0] == "E":
+            enrollment_query(df)
+        elif command[0][0] == "C":
+            if arguments[1][0] == "S":
+                classroom_query(df, arguments[0])
+            elif arguments[1][0] == "T":
+                classroom_query(df, arguments[0], True)
+
+def enrollment_query(df):
+    for i in list(zip(df["Classroom"].value_counts().sort_index().index,
+                      df["Classroom"].value_counts().sort_index().values)):
+        print(i[0],i[1])
 
 def info_query(df):
     for i in range(7):
@@ -110,16 +133,32 @@ def avg_query(df, grade):
     if not math.isnan(val):
         print(val)
 
-def grade_query(df, grade):
+def grade_query(df, grade, find_teach = False):
     try:
         grade = int(grade)
     except:
         print("")
         return
-    students = (list(df[df["Grade"] == grade]
-                     [["StLastName","StFirstName"]].values))
-    for student in students:
-        print(student[0],student[1])
+    if find_teach:
+        teachers = (list(df[df["Grade"] == grade]
+                         [["TLastName","TFirstName"]].values))
+        print(teachers)
+    else:
+        students = (list(df[df["Grade"] == grade]
+                         [["StLastName","StFirstName"]].values))
+        for student in students:
+            print(student[0],student[1])
+
+def classroom_query(df, classroom_num, find_teach = False):
+    try:
+        classroom_num = int(classroom_num)
+    except:
+        print("")
+        return
+    if find_teach:
+        print(df[df["Classroom"] == classroom_num][["TLastName","TFirstName"]].drop_duplicates().values)
+    else:
+        print(df[df["Classroom"] == classroom_num][["StLastName","StFirstName"]].values)
 
 def bus_query(df, bus_route):
     try:
