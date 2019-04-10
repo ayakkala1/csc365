@@ -82,6 +82,8 @@ def main():
                     hi_lo_query(df, arguments[0], lo = True)
                 elif arguments[1][0] == "T":
                     grade_query(df, arguments[0], find_teach = True)
+                elif arguments[1][0] == "S":
+                    grade_query(df, arguments[0], find_teach = False)
             else:
                 grade_query(df, arguments[0])
         elif command[0][0] == "P":
@@ -149,8 +151,10 @@ def grade_query(df, grade, find_teach = False):
         return
     if find_teach:
         teachers = (list(df[df["Grade"] == grade]
-                         [["TLastName","TFirstName"]].values))
-        print(teachers)
+                         [["TLastName","TFirstName"]].
+                         drop_duplicates().values))
+        for teacher in teachers:
+            print(teacher[0],teacher[1])
     else:
         students = (list(df[df["Grade"] == grade]
                          [["StLastName","StFirstName"]].values))
