@@ -1,0 +1,27 @@
+USE ayakkala;
+
+DROP TABLE IF EXISTS Reservations;
+DROP TABLE IF EXISTS Rooms;
+
+CREATE TABLE Rooms(
+RoomId CHAR(3) PRIMARY KEY,
+roomName VARCHAR(20) NOT NULL,
+beds INTEGER,
+bedType VARCHAR(20),
+maxOccupancy INTEGER,
+basePrice DECIMAL,
+decor VARCHAR(20)
+);
+
+CREATE TABLE Reservations(
+`Code` INTEGER PRIMARY KEY,
+Room CHAR(3),
+CheckIn DATE,
+CheckOut DATE,
+Rate DECIMAL,
+LastName VARCHAR(20),
+FirstName VARCHAR(20),
+Adults INTEGER,
+KIDS INTEGER,
+FOREIGN KEY (Room) REFERENCES Rooms (RoomId)
+);

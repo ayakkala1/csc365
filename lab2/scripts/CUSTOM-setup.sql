@@ -1,0 +1,33 @@
+USE ayakkala;
+
+DROP TABLE IF EXISTS reviews;
+DROP TABLE IF EXISTS ratings;
+DROP TABLE IF EXISTS similar;
+DROP TABLE IF EXISTS tags;
+
+CREATE TABLE ratings(
+`Name` VARCHAR(20) PRIMARY KEY,
+Agg_Review DECIMAL,
+`One` DECIMAL,
+Two DECIMAL,
+Three DECIMAL,
+Four DECIMAL,
+Five DECIMAL,
+Agg_Rating DECIMAL
+);
+
+CREATE TABLE similar(
+`Name` VARCHAR(20),
+Similar VARCHAR(20),
+CONSTRAINT PK_CompositePKTable PRIMARY KEY(`Name`,Similar)
+);
+
+CREATE TABLE tags(
+`Name` VARCHAR(20),
+Tags VARCHAR(20),
+CONSTRAINT PK_CompositePKTable PRIMARY KEY(`Name`,Tags)
+);
+
+CREATE TABLE reviews(
+`Name` VARCHAR(20)
+);

@@ -1,0 +1,60 @@
+USE ayakkala;
+
+DROP TABLE IF EXISTS Instruments;
+DROP TABLE IF EXISTS Performance;
+DROP TABLE IF EXISTS Tracklists;
+DROP TABLE IF EXISTS Vocals;
+DROP TABLE IF EXISTS Band;
+DROP TABLE IF EXISTS Songs;
+DROP TABLE IF EXISTS Albums;
+
+CREATE TABLE Albums(
+AId INTEGER PRIMARY KEY,
+Title VARCHAR(20),
+`Year` INTEGER,
+Label VARCHAR(20),
+`Type` VARCHAR(20)
+);
+
+CREATE TABLE Band(
+Id INTEGER PRIMARY KEY,
+Firstname VARCHAR(20),
+Lastname VARCHAR(20)
+);
+
+CREATE TABLE Songs(
+SongId INTEGER PRIMARY KEY,
+Title VARCHAR(20)
+);
+
+CREATE TABLE Instruments(
+SongId INTEGER,
+BandmateId INTEGER,
+Instrument VARCHAR(20),
+FOREIGN KEY (SongId) REFERENCES Songs (SongId),
+FOREIGN KEY (BandmateId) REFERENCES Band (Id)
+);
+
+CREATE TABLE Performance(
+SongId INTEGER,
+BandmateId INTEGER,
+StagePosition VARCHAR(20),
+FOREIGN KEY (SongId) REFERENCES Songs (SongId),
+FOREIGN KEY (BandmateId) REFERENCES Band (Id)
+);
+
+CREATE TABLE Tracklists(
+AlbumId INTEGER,
+Position INTEGER,
+SongId INTEGER,
+FOREIGN KEY (AlbumId) REFERENCES Albums (AId),
+FOREIGN KEY (SongId) REFERENCES Songs (SongId)
+);
+
+CREATE TABLE Vocals(
+SongId INTEGER,
+Bandmate INTEGER,
+`Type` VARCHAR(20),
+FOREIGN KEY (SongId) REFERENCES Songs (SongId),
+FOREIGN KEY (Bandmate) REFERENCES Band (Id)
+);
