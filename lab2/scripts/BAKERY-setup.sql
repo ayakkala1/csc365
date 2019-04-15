@@ -29,6 +29,7 @@ CREATE TABLE items(
 Reciept INTEGER,
 Ordinal INTEGER,
 Item CHAR(15),
+CONSTRAINT PK_CompositePKTable PRIMARY KEY(Reciept,Ordinal),
 FOREIGN KEY (Reciept) references receipts (RecieptNumber),
 FOREIGN KEY (Item) references goods (Id)
 );

@@ -31,6 +31,7 @@ CREATE TABLE Instruments(
 SongId INTEGER,
 BandmateId INTEGER,
 Instrument VARCHAR(20),
+CONSTRAINT PK_CompositePKTable PRIMARY KEY(SongId,BandmateId,Instrument),
 FOREIGN KEY (SongId) REFERENCES Songs (SongId),
 FOREIGN KEY (BandmateId) REFERENCES Band (Id)
 );
@@ -39,6 +40,7 @@ CREATE TABLE Performance(
 SongId INTEGER,
 BandmateId INTEGER,
 StagePosition VARCHAR(20),
+CONSTRAINT PK_CompositePKTable PRIMARY KEY(SongId,BandmateId),
 FOREIGN KEY (SongId) REFERENCES Songs (SongId),
 FOREIGN KEY (BandmateId) REFERENCES Band (Id)
 );
@@ -47,6 +49,7 @@ CREATE TABLE Tracklists(
 AlbumId INTEGER,
 Position INTEGER,
 SongId INTEGER,
+CONSTRAINT PK_CompositePKTable PRIMARY KEY(AlbumId,SongId),
 FOREIGN KEY (AlbumId) REFERENCES Albums (AId),
 FOREIGN KEY (SongId) REFERENCES Songs (SongId)
 );
@@ -55,6 +58,7 @@ CREATE TABLE Vocals(
 SongId INTEGER,
 Bandmate INTEGER,
 `Type` VARCHAR(20),
+CONSTRAINT PK_CompositePKTable PRIMARY KEY(SongId,Bandmate,`Type`),
 FOREIGN KEY (SongId) REFERENCES Songs (SongId),
 FOREIGN KEY (Bandmate) REFERENCES Band (Id)
 );
