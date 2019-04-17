@@ -1,0 +1,118 @@
+Instruction Prompt: 
+Commands: 
+- S[tudent]: <lastname> [B[us]] 
+- T[eacher]: <lastname> 
+- G[rade]: <number> [H[igh]]|L[ow]|S[tudent]|T[eacher]] 
+- C[lassroom]: <number> [S[tudent]|T[eacher]] 
+- A[verage]: <number> 
+- E[nrollment] 
+- I[nfo] 
+- Q[uit] 
+- P[ivot]: <column> 
+Note: The text in arguments is optional while the rest is not. 
+Note: Pivot will always aggregate GPA by the column specified 
+      and return the aggregated variance and mean. 
+
+Type in one of these commands! 
+ 
+S: Cookus
+['COOKUS' 3 107 'FAFARD' ' ROCIO']
+Type in one of these commands! 
+ 
+Student: COOKUS B
+[52]
+Type in one of these commands! 
+ 
+TEACHER: HANTZ
+CORKER  CARTER
+IMMERMAN  DEVIN
+RAPOSE  ALONZO
+OGAS  ERVIN
+MASSART  ELDON
+BEX  TAMESHA
+Type in one of these commands! 
+ 
+G: 		5
+Type in one of these commands! 
+ 
+Bus: 52
+COOKUS  XUAN 3
+ELHADDAD  SHANTE 3
+EARLY  TORY 3
+CORONADO  DIMPLE 6
+KEMERER  ROSETTA 6
+OBREIN  STAN 6
+IMMERMAN  DEVIN 4
+SARAO  DIEDRA 2
+Type in one of these commands! 
+ 
+G: 6 H
+['LAMKIN' ' TAMA' 3.23 'NISTENDIRK' ' NANCY' 55]
+Type in one of these commands! 
+ 
+Average:  5
+Type in one of these commands! 
+ 
+I
+0: 0
+1: 2
+2: 13
+3: 9
+4: 15
+5: 0
+6: 21
+Type in one of these commands! 
+ 
+Student: dory 
+Type in one of these commands! 
+ 
+C: 107 S
+[['COOKUS' ' XUAN']
+ ['ELHADDAD' ' SHANTE']
+ ['SWEDLUND' ' SHARRI']
+ ['CIGANEK' ' MANIE']
+ ['COVINGTON' ' TOMAS']
+ ['EARLY' ' TORY']
+ ['LINHART' ' LELA']]
+Type in one of these commands! 
+ 
+Classroom: 107 Teacher
+[['FAFARD' ' ROCIO']]
+Type in one of these commands! 
+ 
+G: 2 T
+STEIB  GALE
+HAMER  GAVIN
+Type in one of these commands! 
+ 
+Enrollment
+101 1
+102 5
+103 2
+104 2
+105 6
+106 2
+107 7
+108 11
+109 5
+110 2
+111 9
+112 8
+Type in one of these commands! 
+ 
+P: grade
+            var      mean
+            GPA       GPA
+GRADE                    
+1      0.042050  2.995000
+2      0.015276  2.946154
+3      0.025536  3.048889
+4      0.012784  2.951333
+6      0.021821  2.977143
+Type in one of these commands! 
+ 
+P: dog
+Type in one of these commands! 
+ 
+Quit
+(base) Brookes-MacBook-Pro:lab1 brookelhanna$ 
