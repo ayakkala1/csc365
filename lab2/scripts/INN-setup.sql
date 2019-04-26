@@ -5,12 +5,12 @@ DROP TABLE IF EXISTS Rooms;
 
 CREATE TABLE Rooms(
 RoomId CHAR(3) PRIMARY KEY,
-roomName VARCHAR(20) NOT NULL,
+roomName VARCHAR(50) NOT NULL,
 beds INTEGER,
-bedType VARCHAR(20),
+bedType VARCHAR(50),
 maxOccupancy INTEGER,
-basePrice DECIMAL,
-decor VARCHAR(20)
+basePrice DECIMAL(10,2),
+decor VARCHAR(50)
 );
 
 CREATE TABLE Reservations(
@@ -18,7 +18,7 @@ CREATE TABLE Reservations(
 Room CHAR(3),
 CheckIn DATE,
 CheckOut DATE,
-Rate DECIMAL,
+Rate DECIMAL(10,3),
 LastName VARCHAR(20),
 FirstName VARCHAR(20),
 Adults INTEGER,

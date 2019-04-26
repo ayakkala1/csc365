@@ -15,7 +15,7 @@ CREATE TABLE goods(
 Id CHAR(15) PRIMARY KEY,
 Flavor CHAR(20),
 Food CHAR(20),
-Price DECIMAL
+Price DECIMAL(10,2)
 );
 
 CREATE TABLE receipts(

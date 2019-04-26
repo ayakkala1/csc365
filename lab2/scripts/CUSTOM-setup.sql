@@ -6,8 +6,8 @@ DROP TABLE IF EXISTS tags;
 DROP TABLE IF EXISTS ratings;
 
 CREATE TABLE ratings(
-`Name` VARCHAR(20) PRIMARY KEY,
-Agg_Review DECIMAL,
+`Name` VARCHAR(100) PRIMARY KEY,
+Agg_Review DECIMAL(3,2),
 `One` INTEGER,
 Two INTEGER,
 Three INTEGER,
@@ -17,15 +17,15 @@ Agg_Rating DECIMAL
 );
 
 CREATE TABLE similar(
-`Name` VARCHAR(20),
-Similar VARCHAR(20),
+`Name` VARCHAR(100),
+Similar VARCHAR(100),
 CONSTRAINT PK_CompositePKTable PRIMARY KEY(`Name`,Similar),
 FOREIGN KEY (`Name`) REFERENCES ratings(`Name`)
 );
 
 CREATE TABLE tags(
-`Name` VARCHAR(20),
-Tags VARCHAR(20),
+`Name` VARCHAR(100),
+Tags VARCHAR(100),
 CONSTRAINT PK_CompositePKTable PRIMARY KEY(`Name`,Tags),
 FOREIGN KEY (`Name`) REFERENCES ratings(`Name`)
 );
