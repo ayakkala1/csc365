@@ -18,8 +18,8 @@ WHERE flights.Airline in (SELECT Id FROM airlines
 
 -- AIRLINES-3
 ALTER TABLE airports100 
-ADD COLUMN latitude DECIMAL(2,2) NOT NULL DEFAULT 0,
-ADD COLUMN longitude DECIMAL(2,2)  NOT NULL DEFAULT 0,
+ADD COLUMN latitude DECIMAL(10,4) NOT NULL DEFAULT 0,
+ADD COLUMN longitude DECIMAL(10,4)  NOT NULL DEFAULT 0,
 ADD COLUMN altitude INTEGER NOT NULL DEFAULT 0 ;
 
 UPDATE airports100
@@ -47,10 +47,13 @@ WHERE ((Flavor = "Apricot") OR (Flavor = "Chocolate")) AND (Price < 5.95);
 -- BAKERY-3
 # Create Barcode
 ALTER TABLE customers
-ADD COLUMN  Barcodes VARCHAR(50) UNIQUE;
+ADD COLUMN  Barcodes VARCHAR(50) NOT NULL;
 
 UPDATE customers
 SET Barcodes = CONCAT(LPAD(Id, 8,0) , "-" ,LENGTH(LastName), "-" , REVERSE(FirstName));
+
+ALTER TABLE customers
+MODIFY COLUMN Barcodes VARCHAR(50) NOT NULL UNIQUE;
 
 -- INN-1
 DROP TABLE IF EXISTS room_service;
@@ -66,16 +69,28 @@ CONSTRAINT PK_CompositePKTable PRIMARY KEY(RoomId,OrderDate),
 FOREIGN KEY (RoomId) REFERENCES Reservations (`Code`)
 );
 
- INSERT INTO room_service (RoomId,OrderDate,DeliveryDate,BillAmount,Gratuity,FirstName)
- VALUES
- (47496,'2019-01-01','2019-01-02',1.23,1.23,"Bob"),
- (41112,'2019-05-01','2019-05-02',1.23,1.23,"Luke"),
- (76809,'2018-05-01','2019-05-02',1.23,1.23,"Armaan");
+# INSERT INTO Reservations (Code,Room,CheckIn,CheckOut,Rate,LastName,FirstName,Adults,Kids)
+# VALUES
+# (50000,'RND','2019-01-01','2019-01-06',150.00,'KOLB','ENA',1,0),
+# (50001,'RND','2019-01-06','2019-01-11',135.00,'KOLB','ENA',1,0),
+# (50002,'RND','2018-01-12','2018-01-14',187.50,'KOLB','ENA',1,0);
+
+# INSERT INTO room_service (RoomId,OrderDate,DeliveryDate,BillAmount,Gratuity,FirstName)
+# VALUES
+# (50000,'2019-01-01','2019-01-02',1.23,1.23,"ENA"),
+# (50001,'2019-05-01','2019-05-02',1.23,1.23,"ENA"),
+# (50002,'2018-05-01','2019-05-02',1.23,1.23,"ENA");
 
 -- INN-2
-
-DELETE FROM room_service
-WHERE DATE_ADD(OrderDate, INTERVAL 6 MONTH) < CURDATE();
+BEGIN;
+  DELETE FROM room_service
+  WHERE (DATE_ADD(OrderDate, INTERVAL 6 MONTH) < CURDATE()) AND (FirstName = "ENA") AND (RoomId in
+																																		(SELECT `Code`
+                                                                                                                                        FROM Reservations
+                                                                                                                                        Where (FirstName = 'ENA') AND (LastName = 'KOLB')));
+  DELETE FROM Reservations
+  WHERE (DATE_ADD(CheckOut, INTERVAL 6 MONTH) < CURDATE()) AND (FirstName = "ENA") AND (LastName = "KOLB");
+COMMIT;
 
 -- INN-3
 
